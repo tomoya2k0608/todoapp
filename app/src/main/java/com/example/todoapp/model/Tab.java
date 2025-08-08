@@ -7,49 +7,91 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "tab")
 public class Tab {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tab_id") // DB上のカラム名
-    private String id;
-    @Column(name = "tab_name") // DB上のカラム名
-    private String name;
-    @Column(name = "create_user") // DB上のカラム名
-    private String userId;
+    @Column(name = "tab_id")
+    private String tabId;
+    @Column(name = "tab_name")
+    private String tabName;
+    @Column(name = "tab_color")
+    private String tabColor;
+    @Column(name = "tab_note")
+    private String tabNote;
+    @Column(name = "record_date")
+    private Date recordDate;
+    @Column(name = "record_user")
+    private String recordUser;
+    @Column(name = "create_date")
+    private Date createDate;
+    @Column(name = "create_user")
+    private String createUser;
 
-    public Tab() {}
-
-    public Tab(String id, String name, String userId) {
-        this.id = id;
-        this.name = name;
-        this.userId = userId;
+    public String getTabId() {
+        return tabId;
     }
 
-    public String getId() {
-        return id;
+    public void setTabId(String tabId) {
+        this.tabId = tabId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getTabName() {
+        return tabName;
     }
 
-    public String getName() {
-        return name;
+    public void setTabName(String tabName) {
+        this.tabName = tabName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTabColor() {
+        return tabColor;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setTabColor(String tabColor) {
+        this.tabColor = tabColor;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getTabNote() {
+        return tabNote;
+    }
+
+    public void setTabNote(String tabNote) {
+        this.tabNote = tabNote;
+    }
+
+    public Date getRecordDate() {
+        return recordDate;
+    }
+
+    public void setRecordDate(Date recordDate) {
+        this.recordDate = recordDate;
+    }
+
+    public String getRecordUser() {
+        return recordUser;
+    }
+
+    public void setRecordUser(String recordUser) {
+        this.recordUser = recordUser;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
     }
 }

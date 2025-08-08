@@ -92,11 +92,15 @@ export async function fetchTasks(userId, tabId) {
     return res.json();
 }
 
-export async function addTask(userId, tabId, { title, time }) {
-    const res = await fetch(`/api/users/${userId}/tabs/${tabId}/tasks`, {
+export async function addTask(userId,TabName,TabNote) {
+    const res = await fetch(`http://localhost:8080/api/users/${userId}/tabs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, time })
+        body: JSON.stringify({
+                tabId: Math.random().toString(32).substring(2),
+                tabName: TabName,
+                tabNote: TabNote
+            })
     });
     if (!res.ok) {
         throw new Error(`addTask failed: ${res.status}`);

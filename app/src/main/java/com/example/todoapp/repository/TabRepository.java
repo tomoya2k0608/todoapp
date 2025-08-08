@@ -7,5 +7,5 @@ import com.example.todoapp.model.Tab;
 
 @Repository
 public interface TabRepository extends JpaRepository<Tab, String> {
-    List<Tab> findByUserId(String userId);
+    List<Tab> findByCreateUser(String createUser);
 }

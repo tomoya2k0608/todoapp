@@ -18,8 +18,8 @@ public class TabService {
     }
 
 
-    public List<Tab> getTabsByUser(String userId) {
-        return tabRepository.findByUserId(userId); // メソッド名クエリ
+    public List<Tab> getTabsByUser(String createUser) {
+        return tabRepository.findByCreateUser(createUser); // メソッド名クエリ
     }
 
     public List<Tab> getAllTabs() {
@@ -31,7 +31,7 @@ public class TabService {
     }
 
     public Tab saveTab(Tab tab) {
-        return tab;
+        return tabRepository.save(tab);
     }
 
     public void deleteTab(String id) {

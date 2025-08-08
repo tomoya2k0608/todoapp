@@ -6,9 +6,16 @@ import com.example.todoapp.service.TabService;
 import com.example.todoapp.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import jakarta.persistence.EntityManager;
 import java.util.List;
+import java.util.Date;
+
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/users/{userId}")
 public class TodoController {
     private final TabService tabService;
@@ -31,13 +38,22 @@ public class TodoController {
     }
 
     // --- タブの作成 ---
-    // @PostMapping("/tabs")
-    // @ResponseStatus(HttpStatus.CREATED)
-    // public Tab createTab(@PathVariable String userId, @RequestBody Tab tab) {
-    // // サービス側で userId をセットして保存する実装を用意
-    // tab.setUserId(userId);
-    // return tabService.createTab(tab);
-    // }
+    @PostMapping("/tabs")
+    public ResponseEntity<Tab> createTab(@PathVariable String userId, @RequestBody @Valid Tab tab) {
+        // サービス側で userId をセットして保存する実装を用意
+        Date nowDate = new Date();
+        tab.setTabId(tab.getTabId());
+        tab.setTabName(tab.getTabName());
+        tab.setTabNote(tab.getTabNote());
+        tab.setRecordDate(nowDate);
+        tab.setRecordUser(userId);
+        tab.setCreateDate(nowDate);
+        tab.setCreateUser(userId);
+
+        Tab savedTab = tabService.saveTab(tab);
+
+        return ResponseEntity.ok(savedTab);
+    }
 
     // --- タブの削除 ---
     // @DeleteMapping("/tabs/{tabId}")

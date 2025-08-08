@@ -4,20 +4,25 @@ import React from 'react';
 
 export default function Tab({ tab, isActive, onClick }) {
     return (
-        <button
-            onClick={onClick}
-            style={{
-                display: 'block',
-                width: '100%',
-                padding: '8px 12px',
-                marginBottom: 8,
-                textAlign: 'left',
-                background: isActive ? '#e0f7fa' : 'transparent',
-                border: 'none',
-                cursor: 'pointer'
-            }}
-        >
-            {tab.name}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+            <button
+                onClick={onClick}
+                style={{
+                    flexGrow: 1,
+                    padding: '8px 12px',
+                    textAlign: 'left',
+                    background: isActive ? '#e0f7fa' : 'transparent',
+                    border: 'none',
+                    cursor: 'pointer'
+                }}
+            >
+                {tab.tabName}
+            </button>
+            <img 
+                src="/plus.png" 
+                alt="プラスアイコン"
+                style={{ cursor: 'pointer', marginLeft: 8 }}
+            />
+        </div>
     );
 }
