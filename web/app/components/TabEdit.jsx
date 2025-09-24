@@ -1,30 +1,34 @@
-// components/TabRegist.jsx
+// components/TabEdit.jsx
 'use client';
 import { useState, useEffect } from 'react';
-import { addTab } from "../api/api";
+import { updateTab  } from "../api/api";
 
-export default function TabRegist( userId ) {
-  console.log(userId.userId);
+export default function TabEdit({ tabId, tabName, tabNote, onClose }) {
+  console.log('ito');
+  const userId = localStorage.getItem('userId');
+  console.log(userId);
   const [TabName, setTabName] = useState('');
   const [TabNote, setTabNote] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // 初期値を props からセット
+  useEffect(() => {
+    setTabName(tabName || '');
+    setTabNote(tabNote || '');
+  }, [tabName, tabNote]);
 
   const handleOk = async () => {
     try {
-      await addTab(userId.userId,TabName,TabNote);
+      await updateTab(userId,tabId,TabName,TabNote);
+      console.log('タブ更新:', { tabId, TabName, TabNote });
+      alert('タブを更新しました');
     } catch (error) {
-        setErrorMessage("システムエラーです。運営に連絡お願いいたします。");
+      setErrorMessage("システムエラーです。運営に連絡お願いいたします。");
     }
-    console.log('タブ名:', TabName);
-    console.log('備考:', TabNote);
-    alert('タブを登録しました');
-    setTabName('');
-    setTabNote('');
-    onClose(); 
+    onClose();
   };
 
   const handleCancel = () => {
-    setTabName('');
-    setTabNote('');
     onClose(); 
   };
 
@@ -44,7 +48,11 @@ export default function TabRegist( userId ) {
         borderRadius: '8px',
         boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
       }}>
-        <h2 style={{ textAlign: 'center' }}>タブ登録</h2>
+        <h2 style={{ textAlign: 'center' }}>タブ編集</h2>
+
+        {errorMessage && (
+          <p style={{ color: 'red', marginBottom: '10px' }}>{errorMessage}</p>
+        )}
 
         <div style={{ marginBottom: '15px' }}>
           <label>タブ名:</label><br />

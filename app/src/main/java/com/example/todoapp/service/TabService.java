@@ -37,4 +37,8 @@ public class TabService {
     public void deleteTab(String id) {
         // 削除ロジックを実装
     }
+
+    public Optional<Tab> getTabByIdAndUser(String tabId, String userId) {
+        return tabRepository.findByTabIdAndCreateUser(tabId, userId);
+    }
 }

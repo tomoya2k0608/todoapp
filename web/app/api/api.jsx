@@ -92,7 +92,7 @@ export async function fetchTasks(userId, tabId) {
     return res.json();
 }
 
-export async function addTask(userId,TabName,TabNote) {
+export async function addTab(userId,TabName,TabNote) {
     const res = await fetch(`http://localhost:8080/api/users/${userId}/tabs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -103,7 +103,23 @@ export async function addTask(userId,TabName,TabNote) {
             })
     });
     if (!res.ok) {
-        throw new Error(`addTask failed: ${res.status}`);
+        throw new Error(`addTab failed: ${res.status}`);
+    }
+    return res.json();
+}
+
+export async function updateTab(userId, tabId, tabName, tabNote) {
+    const res = await fetch(`http://localhost:8080/api/users/${userId}/tabs/${tabId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            tabName: tabName,
+            tabNote: tabNote
+        })
+    });
+
+    if (!res.ok) {
+        throw new Error(`updateTab failed: ${res.status}`);
     }
     return res.json();
 }

@@ -4,6 +4,7 @@ import com.example.todoapp.model.Tab;
 import com.example.todoapp.model.Task;
 import com.example.todoapp.service.TabService;
 import com.example.todoapp.service.TaskService;
+import com.example.todoapp.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +53,24 @@ public class TodoController {
 
         Tab savedTab = tabService.saveTab(tab);
 
+        return ResponseEntity.ok(savedTab);
+    }
+
+    @PutMapping("/tabs/{tabId}")
+    public ResponseEntity<Tab> updateTab(
+            @PathVariable String userId,
+            @PathVariable String tabId,
+            @RequestBody @Valid Tab updatedTab) {
+        Tab existingTab = tabService.getTabByIdAndUser(tabId, userId)
+            .orElseThrow(() -> new ResourceNotFoundException("Tab not found"));
+
+        // 更新フィールドを反映
+        existingTab.setTabName(updatedTab.getTabName());
+        existingTab.setTabNote(updatedTab.getTabNote());
+        existingTab.setRecordDate(new Date());
+        existingTab.setRecordUser(userId);
+
+        Tab savedTab = tabService.saveTab(existingTab);
         return ResponseEntity.ok(savedTab);
     }
 
